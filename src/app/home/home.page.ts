@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { MenuController, NavController } from '@ionic/angular';
 import { CredenciaisDTO } from 'src/models/credenciais.dto';
-import { AuthService } from 'src/services/domain/auth.service';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -30,8 +30,8 @@ export class HomePage {
 
   login() {
     this.auth.authenticate(this.creds).subscribe(response => {
-      console.log(response.headers.get("Authorization"));
+      this.auth.sucsessfullLogin(response.headers.get("Authorization"));
       this.navCtrl.navigateRoot("categorias");
-    }, error =>{})
+    }, error => { })
   }
 }
