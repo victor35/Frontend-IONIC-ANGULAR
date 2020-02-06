@@ -7,13 +7,11 @@ import { Observable } from 'rxjs';
 
 
 @Injectable()
-export class CategoriaService{
+export class CategoriaService {
 
-    constructor(public http: HttpClient){
+    constructor(public http: HttpClient) { }
 
-    }
-
-    findAll() : Observable<CategoriaDTO[]>{
+    findAll(): Observable<CategoriaDTO[]> {
         return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseUrl}/categorias`);
     }
 }
