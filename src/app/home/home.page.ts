@@ -28,10 +28,12 @@ export class HomePage {
     this.menu.enable(true);
   }
 
+
   login() {
     this.auth.authenticate(this.creds).subscribe(response => {
       this.auth.sucsessfullLogin(response.headers.get("Authorization"));
       this.navCtrl.navigateRoot("categorias");
-    }, error => { })
+    },
+      error => { console.log(error.status) })
   }
 }
