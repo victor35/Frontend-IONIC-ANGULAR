@@ -28,6 +28,14 @@ export class HomePage {
     this.menu.enable(true);
   }
 
+  ionViewDidEnter() {
+    this.auth.refresToken().subscribe(response => {
+      this.auth.sucsessfullLogin(response.headers.get("Authorization"));
+      this.navCtrl.navigateRoot("categorias");
+    },
+      error => { console.log(error.status) })
+
+  }
 
   login() {
     this.auth.authenticate(this.creds).subscribe(response => {
