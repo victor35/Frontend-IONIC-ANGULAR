@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-
-import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AppPage } from 'e2e/src/app.po';
+import { NavController, Platform } from '@ionic/angular';
 import { AuthService } from 'src/services/auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -53,15 +52,15 @@ export class AppComponent {
     });
   }
 
-  openPage(appPages : {title: string, url: string}){
-    switch(appPages.title){
+  openPage(appPages: { title: string, url: string }) {
+    switch (appPages.title) {
       case 'Logout':
         this.authService.logout();
         this.navCtrl.navigateRoot(appPages.url);
         break;
 
-        default:
-          this.navCtrl.navigateRoot(appPages.url);
+      default:
+        this.navCtrl.navigateRoot(appPages.url);
     }
   }
 
