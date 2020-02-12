@@ -35,7 +35,7 @@ import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
     ErrorInterceptorProvider,
     AuthService,
     StorageService,
-    ClienteService
+    ClienteService,
   ],
   bootstrap: [AppComponent]
 })
