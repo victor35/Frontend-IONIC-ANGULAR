@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AppPage } from 'e2e/src/app.po';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -19,21 +21,27 @@ export class AppComponent {
     {
       title: 'Profile',
       url: '/profile',
-      icon: 'profile'
+      icon: 'contact'
     },
     {
       title: 'Categorias',
       url: '/categorias',
-      icon: 'categorias'
+      icon: 'list-box'
     },
-
+    {
+      title: 'Logout',
+      url: '/home',
+      icon: 'exit'
+    }
 
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authService: AuthService,
+    private navCtrl: NavController
   ) {
     this.initializeApp();
   }
@@ -44,4 +52,17 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+  openPage(appPages : {title: string, url: string}){
+    switch(appPages.title){
+      case 'Logout':
+        this.authService.logout();
+        this.navCtrl.navigateRoot(appPages.url);
+        break;
+
+        default:
+          this.navCtrl.navigateRoot(appPages.url);
+    }
+  }
+
 }
