@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-     <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Sign Up</ion-title>
   </ion-toolbar>
@@ -78,15 +78,14 @@
     <ion-item>
       <ion-label position="stacked">Estado*</ion-label>
       <ion-select formControlName="estadoId" (ionChange)="updateCidades()">
-        <ion-select-option value="1">Minas Gerais</ion-select-option>
-        <ion-select-option value="2">São Paulo</ion-select-option>
+        <ion-select-option *ngFor="let estado of estados; first as f" [value]="estado.id" [selected]="f">
+          {{estado.nome}} </ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Cidade*</ion-label>
       <ion-select formControlName="cidadeId">
-        <ion-select-option value="1">Uberlândia</ion-select-option>
-        <ion-select-option value="2">Campinas</ion-select-option>
+        <ion-select-option *ngFor="let cidade of cidades" [value]="cidade.id"> {{cidade.nome}} </ion-select-option>
       </ion-select>
     </ion-item>
     <ion-button expand="block" type="submit">Criar conta</ion-button>

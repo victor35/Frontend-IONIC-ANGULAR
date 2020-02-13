@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NavController,  } from '@ionic/angular';
+import { NavController, } from '@ionic/angular';
+import { CidadeService } from 'src/services/domain/cidade.service';
+import { EstadoService } from 'src/services/domain/estado.service';
+import { EstadoDTO } from 'src/models/estado.dto';
+import { CidadeDTO } from 'src/models/cidade.dto';
 
 @Component({
   selector: 'app-singup',
@@ -10,10 +14,14 @@ import { NavController,  } from '@ionic/angular';
 export class SingupPage implements OnInit {
 
   public loginGroup: FormGroup;
+  estados: EstadoDTO[];
+  cidades: CidadeDTO[];
 
   constructor(public navCtrl: NavController,
-   
-    public formBuilder: FormBuilder) {
+
+    public formBuilder: FormBuilder,
+    public cidadeService: CidadeService,
+    public estadoService: EstadoService) {
 
     this.loginGroup = this.formBuilder.group({
       nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
@@ -35,10 +43,27 @@ export class SingupPage implements OnInit {
   }
 
   ngOnInit() {
+    this.estadoService.findAll().subscribe(response => {
+      this.estados = response;
+      this.loginGroup.controls.estadoId.setValue(this.estados[0].id);
+      this.updateCidades();
+
+    }, error => { })
   }
 
   signupUser() {
     console.log("olá");
+  }
+
+  
+
+  updateCidades() {
+    let estado_id = this.loginGroup.value.estadoId;
+    this.cidadeService.findAll(estado_id).subscribe(response => {
+      this.cidades = response;
+      this.loginGroup.controls.cidadeId.setValue(null);
+
+    }, error => { })  
   }
 
 }

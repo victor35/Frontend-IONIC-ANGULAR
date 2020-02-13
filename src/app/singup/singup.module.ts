@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { SingupPageRoutingModule } from './singup-routing.module';
 
 import { SingupPage } from './singup.page';
+import { EstadoService } from 'src/services/domain/estado.service';
+import { CidadeService } from 'src/services/domain/cidade.service';
 
 @NgModule({
   imports: [
@@ -15,8 +17,12 @@ import { SingupPage } from './singup.page';
     IonicModule,
     SingupPageRoutingModule,
     ReactiveFormsModule,
-  
+
   ],
-  declarations: [SingupPage]
+  declarations: [SingupPage],
+  providers: [
+    EstadoService,
+    CidadeService
+  ]
 })
-export class SingupPageModule {}
+export class SingupPageModule { }
