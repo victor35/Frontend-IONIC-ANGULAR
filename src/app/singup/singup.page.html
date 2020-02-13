@@ -13,10 +13,15 @@
       <ion-label position="stacked">Nome*</ion-label>
       <ion-input formControlName="nome" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.nome.dirty && loginGroup.controls.nome.errors" style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Email*</ion-label>
       <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.email.dirty && loginGroup.controls.email.errors"
+      style="margin-left:10px; color: red;">
+      Valor inválido</p>
 
     <ion-list>
       <ion-item-group>
@@ -39,18 +44,30 @@
       <ion-label position="stacked">CPF ou CNPJ</ion-label>
       <ion-input formControlName="cpfOuCnpj" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.cpfOuCnpj.dirty && loginGroup.controls.cpfOuCnpj.errors"
+      style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Senha*</ion-label>
       <ion-input formControlName="senha" type="password"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.cpfOuCnpj.dirty && loginGroup.controls.cpfOuCnpj.errors"
+      style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Logradouro*</ion-label>
       <ion-input formControlName="logradouro" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.logradouro.dirty && loginGroup.controls.logradouro.errors"
+      style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Número*</ion-label>
       <ion-input formControlName="numero" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.numero.dirty && loginGroup.controls.numero.errors"
+      style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Complemento</ion-label>
       <ion-input formControlName="complemento" type="text"></ion-input>
@@ -63,10 +80,15 @@
       <ion-label position="stacked">CEP*</ion-label>
       <ion-input formControlName="cep" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.cep.dirty && loginGroup.controls.cep.errors" style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Telefone 1*</ion-label>
       <ion-input formControlName="telefone1" type="text"></ion-input>
     </ion-item>
+    <p *ngIf="loginGroup.controls.telefone1.dirty && loginGroup.controls.telefone1.errors"
+      style="margin-left:10px; color: red;">
+      Valor inválido</p>
     <ion-item>
       <ion-label position="stacked">Telefone 2</ion-label>
       <ion-input formControlName="telefone2" type="text"></ion-input>
@@ -88,7 +110,7 @@
         <ion-select-option *ngFor="let cidade of cidades" [value]="cidade.id"> {{cidade.nome}} </ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-button expand="block" type="submit">Criar conta</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="loginGroup.invalid">Criar conta</ion-button>
   </form>
 
 </ion-content>
