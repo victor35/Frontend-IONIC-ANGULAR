@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NavController, } from '@ionic/angular';
-import { CidadeService } from 'src/services/domain/cidade.service';
-import { EstadoService } from 'src/services/domain/estado.service';
-import { EstadoDTO } from 'src/models/estado.dto';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController, NavController } from '@ionic/angular';
 import { CidadeDTO } from 'src/models/cidade.dto';
+import { EstadoDTO } from 'src/models/estado.dto';
+import { CidadeService } from 'src/services/domain/cidade.service';
+import { ClienteService } from 'src/services/domain/cliente.service';
+import { EstadoService } from 'src/services/domain/estado.service';
 
 @Component({
   selector: 'app-singup',
@@ -21,7 +22,9 @@ export class SingupPage implements OnInit {
 
     public formBuilder: FormBuilder,
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {
 
     this.loginGroup = this.formBuilder.group({
       nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
@@ -52,10 +55,32 @@ export class SingupPage implements OnInit {
   }
 
   signupUser() {
-    console.log("olá");
+    this.clienteService.insert(this.loginGroup.value).subscribe(
+      response => {
+        this.showInsertOk();
+      },
+      error => { }
+    )
   }
 
-  
+  async showInsertOk() {
+    let alert = await this.alertCtrl.create({
+      header: 'Sucesso',
+      message: 'Cadastro concluído com sucessso',
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: 'OK!',
+          handler: () => {
+            this.navCtrl.navigateBack("/home");
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
 
   updateCidades() {
     let estado_id = this.loginGroup.value.estadoId;
@@ -63,7 +88,7 @@ export class SingupPage implements OnInit {
       this.cidades = response;
       this.loginGroup.controls.cidadeId.setValue(null);
 
-    }, error => { })  
+    }, error => { })
   }
 
 }
