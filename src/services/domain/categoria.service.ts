@@ -4,8 +4,6 @@ import { API_CONFIG } from 'src/config/api.config';
 import { CategoriaDTO } from 'src/models/categoria.dto';
 import { Observable } from 'rxjs';
 
-
-
 @Injectable()
 export class CategoriaService {
 

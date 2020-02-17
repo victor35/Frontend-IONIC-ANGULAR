@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./singup/singup.module').then( m => m.SingupPageModule)
   },
   {
-    path: 'produtos',
+    path: 'produtos/:id',
     loadChildren: () => import('./produtos/produtos.module').then( m => m.ProdutosPageModule)
   },
 ];
