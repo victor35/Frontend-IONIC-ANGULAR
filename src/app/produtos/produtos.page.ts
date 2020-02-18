@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoDTO } from 'src/models/produtos.dto';
 import { ProdutoService } from 'src/services/domain/produto.service';
 import { API_CONFIG } from 'src/config/api.config';
@@ -13,7 +13,7 @@ export class ProdutosPage implements OnInit {
 
   items: ProdutoDTO[];
 
-  constructor(public produtoService: ProdutoService, public route: ActivatedRoute) { }
+  constructor(public produtoService: ProdutoService, public route: ActivatedRoute, public router: Router) { }
 
   ngOnInit() {
     this.findByCategoria();
@@ -35,5 +35,9 @@ export class ProdutosPage implements OnInit {
       },
         error => { })
     }
+  }
+
+  showDetail(){
+    this.router.navigate(['/produto-detail'])
   }
 }
