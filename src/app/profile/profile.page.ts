@@ -21,17 +21,16 @@ export class ProfilePage implements OnInit {
     public navCtrl: NavController) { }
 
   ngOnInit() {
-
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
       this.clienteService.findByEMail(localUser.email).subscribe(response => {
-        this.cliente = response;
+        this.cliente = response as ClienteDTO;
         this.getImageIfExists();
       },
         error => {
           if (error.status == 403) {
             this.navCtrl.navigateRoot('home');
-          } 
+          }
         });
     } else {
       this.navCtrl.navigateRoot('home');
