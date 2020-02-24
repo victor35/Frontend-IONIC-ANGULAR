@@ -13,11 +13,6 @@ import { AuthService } from 'src/services/auth.service';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
       title: 'Profile',
       url: '/profile',
       icon: 'contact'
@@ -26,6 +21,11 @@ export class AppComponent {
       title: 'Categorias',
       url: '/categorias',
       icon: 'list-box'
+    },
+    {
+      title: 'Carrinho',
+      url: '/cart',
+      icon: 'cart'
     },
     {
       title: 'Logout',
