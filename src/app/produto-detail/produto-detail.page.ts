@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoDTO } from 'src/models/produtos.dto';
 import { ProdutoService } from 'src/services/domain/produto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_CONFIG } from 'src/config/api.config';
+import { CartService } from 'src/services/domain/cart.service';
 
 @Component({
   selector: 'app-produto-detail',
@@ -13,7 +14,7 @@ export class ProdutoDetailPage implements OnInit {
 
   item: ProdutoDTO;
 
-  constructor(public produtoService: ProdutoService, public route: ActivatedRoute) { }
+  constructor(public produtoService: ProdutoService, public route: ActivatedRoute, public cartService: CartService, public router: Router) { }
 
   ngOnInit() {
     this.findByProduto();
@@ -33,5 +34,10 @@ export class ProdutoDetailPage implements OnInit {
       this.item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${this.item.id}.jpg`
     },
       error => { })
+  }
+
+  addToCart(produto: ProdutoDTO){
+    this.cartService.addProduto(produto);
+    this.router.navigate(['cart']);
   }
 }
