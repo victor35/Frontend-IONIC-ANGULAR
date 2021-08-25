@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { DataResolverService } from 'src/services/domain/data-resolver.service';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'pick-address',
     loadChildren: () => import('./pick-address/pick-address.module').then( m => m.PickAddressPageModule)
+  },
+  {
+    path: 'payement',
+    loadChildren: () => import('./payement/payement.module').then( m => m.PayementPageModule)
   },
 ];
 
