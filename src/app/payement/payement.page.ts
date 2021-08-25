@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/router';
 import { PedidoDTO } from 'src/models/pedido.dto';
 import { DataService } from 'src/services/domain/data.service';
 import { PedidoService } from 'src/services/domain/pedido.service';
@@ -22,13 +22,9 @@ export class PayementPage implements OnInit {
  
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        debugger
         this.pedido = this.router.getCurrentNavigation().extras.state.pedido;
       }
     });
-
-    
-    console.log("pedido payemente",this.pedido);
     
     this.formGroup = this.formBuilder.group({
       numeroDeParcelas:[1,Validators.required],
@@ -48,7 +44,12 @@ export class PayementPage implements OnInit {
   nextPage(){
     console.log(this.pedido);
     this.pedido.pagamento = this.formGroup.value; 
-    
+    let navigationExtras: NavigationExtras = {
+      state: {
+        pedido: this.pedido
+      }
+    };
+    this.router.navigate(['/order-confirmation'],navigationExtras);
   }
 
 }
