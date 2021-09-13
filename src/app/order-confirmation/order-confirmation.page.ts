@@ -6,6 +6,7 @@ import { EnderecoDTO } from 'src/models/endereco.dto';
 import { PedidoDTO } from 'src/models/pedido.dto';
 import { CartService } from 'src/services/domain/cart.service';
 import { ClienteService } from 'src/services/domain/cliente.service';
+import { PedidoService } from 'src/services/domain/pedido.service';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -19,7 +20,9 @@ export class OrderConfirmationPage implements OnInit {
   cliente : ClienteDTO;
   endereco: EnderecoDTO;
 
-  constructor(public route: ActivatedRoute,public router: Router, public cartService: CartService, public clienteService: ClienteService) {
+  constructor(public route: ActivatedRoute,public router: Router, 
+    public cartService: CartService, public clienteService: ClienteService,
+    public pedidoService: PedidoService) {
 
     this.route.queryParams.subscribe(params=>{
       if(this.router.getCurrentNavigation().extras.state){
@@ -47,8 +50,20 @@ export class OrderConfirmationPage implements OnInit {
     return this.cartService.total();
   }
 
+  checkout(){
+    console.log(this.pedido);
+    
+    this.pedidoService.insert(this.pedido).subscribe(res=>{
+      this.cartService.createOrClearCart();
+      console.log(res.headers.get('location'));
+    }, error=>{
+        if(error.status == 403){
+          this.router.navigateByUrl('/home');
+        }
+    })
+  }
   back(){
-    this.router.navigateByUrl("/payement");
+    this.router.navigateByUrl("/cart");
   }
 
 }

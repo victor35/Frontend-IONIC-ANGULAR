@@ -1,17 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_CONFIG } from 'src/config/api.config';
 import { PedidoDTO } from 'src/models/pedido.dto';
 
 @Injectable()
 export class PedidoService {
-    private pedido = [];
 
-    constructor() { }
+    constructor( public http:HttpClient) { }
 
-    setPedido(id, pedido) {
-        this.pedido[id] = pedido;
-    }
-
-    getPedido(id) {
-        return this.pedido[id];
+    insert(obj: PedidoDTO) {
+       return this.http.post(`${API_CONFIG.baseUrl}/pedidos`,obj,{observe:'response', responseType:'text'});
     }
 }
