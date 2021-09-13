@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoDTO } from 'src/models/produtos.dto';
 import { ProdutoService } from 'src/services/domain/produto.service';
 import { API_CONFIG } from 'src/config/api.config';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-produtos',
@@ -13,17 +14,19 @@ export class ProdutosPage implements OnInit {
 
   items: ProdutoDTO[];
 
-  constructor(public produtoService: ProdutoService, public route: ActivatedRoute, public router: Router) { }
+  constructor(public produtoService: ProdutoService, public route: ActivatedRoute, public router: Router, public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.findByCategoria();
   }
 
-  findByCategoria() { 
+  async findByCategoria() { 
     let cat_id = this.route.snapshot.paramMap.get('id');
+    let  loader = await this.presentLoading();
     this.produtoService.findByCategoria(cat_id).subscribe(response => {
       this.items = response['content']; 
       this.loadImageUrls();
+      loader.dismiss();
     }, error => { });
   }
 
@@ -39,5 +42,15 @@ export class ProdutosPage implements OnInit {
 
   showDetail(produto_id: string){
     this.router.navigate(['produto-detail', produto_id])
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      //cssClass: 'my-custom-class',
+      message: 'Aguarde...',
+      //duration: 2000
+    });
+    await loading.present();
+    return loading;
   }
 }
