@@ -27,7 +27,9 @@ export class ProdutosPage implements OnInit {
       this.items = response['content']; 
       this.loadImageUrls();
       loader.dismiss();
-    }, error => { });
+    }, error => { 
+      loader.dismiss();
+    });
   }
 
   loadImageUrls() {
@@ -52,5 +54,12 @@ export class ProdutosPage implements OnInit {
     });
     await loading.present();
     return loading;
+  }
+
+  doRefresh(event) {
+    setTimeout(() => {
+      event.target.complete();
+      this.findByCategoria(); // tem q melhorar pra pagina q ta
+    }, 1000);
   }
 }
