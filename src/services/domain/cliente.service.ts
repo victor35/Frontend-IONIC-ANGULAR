@@ -5,7 +5,9 @@ import { ClienteDTO } from 'src/models/cliente.dto';
 import { API_CONFIG } from 'src/config/api.config';
 import { StorageService } from '../storage.service';
 
-Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class ClienteService {
 
     constructor(public http: HttpClient, public storage: StorageService) { }

@@ -5,7 +5,12 @@ import { ClienteService } from 'src/services/domain/cliente.service';
 import { API_CONFIG } from 'src/config/api.config';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 
+export interface PhotoInterface {
+  filepath: string;
+  webviewPath: string;
+}
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -14,7 +19,9 @@ import { NavController } from '@ionic/angular';
 export class ProfilePage implements OnInit {
 
   cliente: ClienteDTO;
-
+  public photosInterface: PhotoInterface[] = [];
+  cameraOn: boolean = false;
+  picture: any;
 
   constructor(public storage: StorageService,
     public clienteService: ClienteService,
@@ -45,4 +52,29 @@ export class ProfilePage implements OnInit {
         error => { });
   }
 
+  async getCameraPicture(){
+    this.cameraOn = true;
+    // Take a photo
+    const capturedPhoto = await Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+      quality: 100
+    }).catch((err)=>{
+      console.log('provavelmente o usuario cancelou a imagem', err);
+    });
+
+    if(capturedPhoto){
+      // save photos
+      this.photosInterface.unshift({
+        filepath: "soon...",
+        webviewPath: capturedPhoto.webPath
+      });
+      console.log(this.photosInterface);
+      this.picture = this.photosInterface[0].webviewPath 
+    }
+    
+    this.cameraOn = false;
+  }
+
 }
+
